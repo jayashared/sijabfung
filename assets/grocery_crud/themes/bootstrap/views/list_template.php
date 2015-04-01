@@ -145,7 +145,7 @@
                                     </td>
                                     <?php foreach($columns as $column){?>
                                         <td>
-                                            <input type="text" class="form-control searchable-input floatL" placeholder="Cari <?php echo $column->display_as; ?>" name="<?php echo $column->field_name; ?>" />
+                                            <input type="text" class="form-control searchable-input input-sm floatL" placeholder="Cari..." name="<?php echo $column->field_name; ?>" />
                                         </td>
                                     <?php }?>
         						</tr>
