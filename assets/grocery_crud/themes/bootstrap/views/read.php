@@ -1,6 +1,6 @@
 <?php
-$this->set_css($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.min.css');
-$this->set_css($this->default_theme_path.'/bootstrap/css/font-awesome/css/font-awesome.min.css');
+$this->set_css($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.css');
+$this->set_css($this->default_theme_path.'/bootstrap/css/font-awesome/css/font-awesome.css');
 $this->set_css($this->default_theme_path.'/bootstrap/css/common.css');
 $this->set_css($this->default_theme_path.'/bootstrap/css/general.css');
 $this->set_css($this->default_theme_path.'/bootstrap/css/add-edit-form.css');

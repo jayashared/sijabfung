@@ -1,6 +1,6 @@
 <?php
     $this->set_css($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.css');
-    $this->set_css($this->default_theme_path.'/bootstrap/css/font-awesome/css/font-awesome.min.css');
+    $this->set_css($this->default_theme_path.'/bootstrap/css/font-awesome/css/font-awesome.css');
     $this->set_css($this->default_theme_path.'/bootstrap/css/common.css');
     $this->set_css($this->default_theme_path.'/bootstrap/css/general.css');
     $this->set_css($this->default_theme_path.'/bootstrap/css/add-edit-form.css');
@@ -20,20 +20,21 @@
 	$this->set_js_lib($this->default_javascript_path.'/jquery_plugins/jquery.noty.js');
 	$this->set_js_config($this->default_javascript_path.'/jquery_plugins/config/jquery.noty.config.js');
 ?>
+<br />
 <div class="crud-form" data-unique-hash="<?php echo $unique_hash; ?>">
-    <div class="container">
+    <div class="">
         <div class="row">
             <div class="col-md-12">
                 <div class="table-label">
                     <div class="floatL l5">
                         <?php echo $this->l('form_add'); ?> <?php echo $subject?>
                     </div>
-                    <div class="floatR r5 minimize-maximize-container minimize-maximize">
+                    <!--<div class="floatR r5 minimize-maximize-container minimize-maximize">
                         <i class="fa fa-caret-up"></i>
                     </div>
                     <div class="floatR r5 gc-full-width">
                         <i class="fa fa-expand"></i>
-                    </div>
+                    </div>-->
                     <div class="clear"></div>
                 </div>
                 <div class="form-container table-container">

@@ -13,12 +13,26 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a href="<?php echo base_url() ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href="tables.html"><i class="fa fa-table fa-fw"></i> Berita</a>
+                <a href="<?php echo base_url() ?>admin/berita" id="berita" class=""><i class="fa fa-table fa-fw"></i> Berita</a>
             </li>
-            
+            <li>
+                <a href="#"><i class="fa fa-files-o fa-fw"></i> Master<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/ulp" id="ulp">ULP</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/link" id="link">Link</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/unit_kerja" id="unit_kerja">Unit Kerja</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
             <li>
                 <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -36,3 +50,7 @@
     <!-- /.sidebar-collapse -->
 </div>
 <!-- /.navbar-static-side -->
+
+<script>
+	$("#<?php echo strtolower($this->uri->segment(2)) ?>").addClass("active");
+</script>

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
+    <link rel="shortcut icon" HREF="<?php echo base_url() ?>assets/images/icon.png">
     <meta name="author" content="">
     <title><?php echo isset($title)?$title:"Halaman Administrator" ?></title>
     <?php $this->load->view("admin/include/css.view.php") ?>
@@ -22,16 +23,9 @@
         </nav>
 		
         <div id="page-wrapper">
-        	<div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <?php $this->load->view($konten) ?>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
+          	<div class="">
+		  		<?php echo($output) ?>
+        	</div>
         </div>
         <!-- /#page-wrapper -->
     </div>

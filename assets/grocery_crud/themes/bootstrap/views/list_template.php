@@ -1,6 +1,6 @@
 <?php
-    $this->set_css($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.min.css');
-    $this->set_css($this->default_theme_path.'/bootstrap/css/font-awesome/css/font-awesome.min.css');    
+    $this->set_css($this->default_theme_path.'/bootstrap/css/bootstrap/bootstrap.css');
+    $this->set_css($this->default_theme_path.'/bootstrap/css/font-awesome/css/font-awesome.css');    
     $this->set_css($this->default_theme_path.'/bootstrap/css/common.css');    
     $this->set_css($this->default_theme_path.'/bootstrap/css/list.css');
     $this->set_css($this->default_theme_path.'/bootstrap/css/general.css');
@@ -55,7 +55,7 @@
 
 </script>
     <br/>
-    <div class="container gc-container">
+    <div class="gc-container">
         <div class="success-message hidden"><?php
         if($success_message !== null){?>
            <?php echo $success_message; ?> &nbsp; &nbsp;
@@ -68,12 +68,12 @@
                     <div class="floatL l5">
                         <?php echo $subject_plural; ?>
                     </div>                  
-                    <div class="floatR r5 minimize-maximize-container minimize-maximize">
+                    <!--<div class="floatR r5 minimize-maximize-container minimize-maximize">
                         <i class="fa fa-caret-up"></i>
                     </div>
                     <div class="floatR r5 gc-full-width">
                         <i class="fa fa-expand"></i>                        
-                    </div>                      
+                    </div> -->                     
                     <div class="clear"></div>
                 </div>
                 <div class="table-container">
@@ -145,7 +145,7 @@
                                     </td>
                                     <?php foreach($columns as $column){?>
                                         <td>
-                                            <input type="text" class="form-control searchable-input floatL" placeholder="Search <?php echo $column->display_as; ?>" name="<?php echo $column->field_name; ?>" />
+                                            <input type="text" class="form-control searchable-input floatL" placeholder="Cari <?php echo $column->display_as; ?>" name="<?php echo $column->field_name; ?>" />
                                         </td>
                                     <?php }?>
         						</tr>

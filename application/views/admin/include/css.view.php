@@ -1,5 +1,5 @@
 <!-- Bootstrap Core CSS -->
-<link href="<?php echo base_url() ?>assets/startbootstrap-sb-admin-2-1.0.5/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--<link href="<?php echo base_url() ?>assets/startbootstrap-sb-admin-2-1.0.5/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
 
 <!-- MetisMenu CSS -->
 <link href="<?php echo base_url() ?>assets/startbootstrap-sb-admin-2-1.0.5/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
