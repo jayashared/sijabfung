@@ -21,29 +21,20 @@
 <br />
 <div class="crud-form" data-unique-hash="<?php echo $unique_hash; ?>">
     <div class="">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-label">
-                    <div class="floatL l5">
-                        <?php echo $this->l('form_edit'); ?> <?php echo $subject?>
-                    </div>
-                    <!--<div class="floatR r5 minimize-maximize-container minimize-maximize">
-                        <i class="fa fa-caret-up"></i>
-                    </div>
-                    <div class="floatR r5 gc-full-width">
-                        <i class="fa fa-expand"></i>
-                    </div>-->
-                    <div class="clear"></div>
+        <div class="">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+					<?php echo $this->l('form_edit'); ?> <?php echo $subject?>
                 </div>
-                <div class="form-container table-container">
+                <div class="panel-body">
                         <?php echo form_open( $update_url, 'method="post" id="crudForm"  enctype="multipart/form-data" class="form-horizontal"'); ?>
 
                             <?php foreach($fields as $field) { ?>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">
+                                    <label class="col-sm-2 control-label">
                                         <?php echo $input_fields[$field->field_name]->display_as?><?php echo ($input_fields[$field->field_name]->required)? "<span class='required'>*</span> " : ""?>
                                     </label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-10">
                                         <?php echo $input_fields[$field->field_name]->input; ?>
                                     </div>
                                 </div>

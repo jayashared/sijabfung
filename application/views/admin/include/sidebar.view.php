@@ -19,6 +19,9 @@
                 <a href="<?php echo base_url() ?>admin/berita" id="berita" class=""><i class="fa fa-table fa-fw"></i> Berita</a>
             </li>
             <li>
+                <a href="<?php echo base_url() ?>admin/pengumuman" id="pengumuman" class=""><i class="fa fa-table fa-fw"></i> Pengumuman</a>
+            </li>
+            <li>
                 <a href="#"><i class="fa fa-files-o fa-fw"></i> Master<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
@@ -29,6 +32,21 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url() ?>admin/unit_kerja" id="unit_kerja">Unit Kerja</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/faq_kategori" id="faq_kategori">FAQ Kategori</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/faq" id="faq">FAQ</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/download" id="download">Download</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/gallery" id="gallery">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() ?>admin/konten_statis" id="konten_statis">Konten Statis</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

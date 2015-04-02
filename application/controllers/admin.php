@@ -14,12 +14,33 @@ class Admin extends CI_Controller {
 
 			$crud->set_table('tbl_berita');
 			$crud->set_subject('Berita');
-			$crud->set_field_upload('gambar','assets/uploads/files');
+			$crud->set_field_upload('gambar','assets/uploads/gambar');
 			
 			$crud->required_fields('judul', 'berita_singkat', 'berita_penuh');
 			$crud->fields('judul', 'berita_singkat', 'berita_penuh', 'gambar');
 			$crud->display_as('berita_singkat','Headline')->display_as('berita_penuh','Isi Berita');
 			$crud->columns('judul','berita_singkat','berita_penuh');
+			
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function pengumuman()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_pengumuman');
+			$crud->set_subject('Pengumuman');
+			$crud->set_field_upload('berkas','assets/uploads/berkas');
+			
+			$crud->required_fields('judul');
+			$crud->fields('judul', 'isi_pengumuman', 'berkas');
+			$crud->columns('judul', 'isi_pengumuman');;
 			
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
@@ -95,6 +116,108 @@ class Admin extends CI_Controller {
 				 ;
 			$crud->columns('nama_ulp','id_unit_kerja', 'kepala_nama', 'kepala_nip', 'kepala_pangkat', 'kepala_jabatan');
 			$crud->order_by('id_unit_kerja','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function faq_kategori()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_faq_kategori');
+			$crud->set_subject('Kategori FAQ');
+			
+			$crud->required_fields('kategori');
+			$crud->fields('kategori');
+			$crud->columns('kategori');
+			$crud->order_by('id_faq_kategori','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function faq()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_faq');
+			$crud->set_subject('Daftar FAQ');
+			$crud->required_fields('pertanyaan', 'jawaban', 'tampilkan');
+			$crud->set_relation('id_faq_kategori','tbl_faq_kategori','kategori');
+			$crud->display_as('id_faq_kategori','Kategori');
+			$crud->fields('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan');
+			$crud->columns('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan');
+			$crud->order_by('id_faq','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function download()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_download_content');
+			$crud->set_subject('Daftar Download');
+			$crud->set_field_upload('berkas','assets/uploads/berkas');
+			$crud->required_fields('judul', 'berkas');
+			$crud->fields('judul', 'deskripsi', 'berkas');
+			$crud->columns('judul', 'deskripsi');
+			$crud->order_by('id_download_content','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	
+	public function gallery()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_gallery');
+			$crud->set_subject('Gallery');
+			$crud->set_field_upload('gambar','assets/uploads/gambar');
+			$crud->required_fields('judul', 'gambar');
+			$crud->fields('judul', 'deskripsi', 'gambar');
+			$crud->columns('judul', 'deskripsi', 'gambar');
+			$crud->order_by('id_gallery','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function konten_statis()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_konten_statis');
+			$crud->set_subject('Konten Statis');
+			$crud->set_field_upload('gambar','assets/uploads/gambar');
+			$crud->required_fields('judul', 'deskripsi');
+			$crud->fields('judul', 'deskripsi', 'gambar');
+			$crud->columns('judul', 'deskripsi');
+			$crud->order_by('id_konten_statis','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 

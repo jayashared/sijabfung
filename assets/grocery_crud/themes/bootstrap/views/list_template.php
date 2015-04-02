@@ -62,26 +62,17 @@
         <?php }
         ?></div>
 
- 		<div class="row">
-        	<div class="col-md-12 table-section">
-                <div class="table-label">
-                    <div class="floatL l5">
-                        <?php echo $subject_plural; ?>
-                    </div>                  
-                    <!--<div class="floatR r5 minimize-maximize-container minimize-maximize">
-                        <i class="fa fa-caret-up"></i>
-                    </div>
-                    <div class="floatR r5 gc-full-width">
-                        <i class="fa fa-expand"></i>                        
-                    </div> -->                     
-                    <div class="clear"></div>
+ 		<div class="">
+        	<div class="panel panel-success">
+                <div class="panel-heading">
+					<?php echo $subject_plural; ?>                                
                 </div>
-                <div class="table-container">
+                <div class="panel-body">
                     <?php echo form_open("", 'method="post" autocomplete="off" id="gcrud-search-form"'); ?>
-                        <div class="header-tools">
+                        <div class="form-group">
                             <?php if(!$unset_add){?>
                                 <div class="floatL t5">
-                                    <a class="btn btn-default" href="<?php echo $add_url?>"><i class="fa fa-plus"></i> &nbsp; <?php echo $this->l('list_add'); ?> <?php echo $subject?></a>
+                                    <a class="btn btn-info" href="<?php echo $add_url?>"><i class="fa fa-plus"></i> &nbsp; <?php echo $this->l('list_add'); ?> <?php echo $subject?></a>
                                 </div>
                             <?php } ?>
                             <div class="floatR">
@@ -111,18 +102,19 @@
                             </div>
                             <div class="clear"></div>
                         </div>
-        			    <table class="table table-bordered grocery-crud-table table-hover">
+        			    <table class="table grocery-crud-table table-hover">
         					<thead>
-        						<tr>
+        						<tr class="bg-primary">
         							<th colspan="2">
                                         <?php echo $this->l('list_actions'); ?>
                                     </th>
                                     <?php foreach($columns as $column){?>
-                                        <th class="column-with-ordering" data-order-by="<?php echo $column->field_name; ?>"><?php echo $column->display_as; ?></th>
+                                        <th class="column-with-ordering" data-order-by="<?php echo $column->field_name; ?>">
+											<?php echo $column->display_as; ?>
+                                        </th>
                                     <?php }?>
         						</tr>
-        						
-        						<tr class="filter-row gc-search-row">
+        						<tr class="filter-row gc-search-row bg-info">
         							<td style="border-right: none;">
         							     <div class="floatL t5">
         							         <input type="checkbox" class="select-all-none" />
