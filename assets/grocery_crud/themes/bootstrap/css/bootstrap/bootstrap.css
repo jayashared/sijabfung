@@ -1375,6 +1375,14 @@ a.bg-success:hover {
 a.bg-info:hover {
   background-color: #afd9ee;
 }
+
+.bg-silver {
+  background-color: #f4f4f4;
+}
+a.bg-silver:hover {
+  background-color: #f4f4f4;
+}
+
 .bg-warning {
   background-color: #fcf8e3;
 }

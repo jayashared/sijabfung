@@ -114,7 +114,7 @@
                                         </th>
                                     <?php }?>
         						</tr>
-        						<tr class="filter-row gc-search-row bg-info">
+        						<tr class="filter-row gc-search-row bg-silver">
         							<td style="border-right: none;">
         							     <div class="floatL t5">
         							         <input type="checkbox" class="select-all-none" />

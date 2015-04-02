@@ -5,22 +5,50 @@ class Admin extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$member_in = $this->_is_member_in();
+
+		if( empty($member_in) )
+		{
+			$message = '<div class="alert alert-danger" role="alert"><strong>Peringatan!</strong> Akses ditolak </div>';
+			$this->session->set_flashdata('pesan', $message);
+			redirect("login");
+		}
 	}
 	
-	public function berita()
+	public function _is_member_in()
 	{
+		return $this->session->userdata("member_in");
+	}
+	
+	function get_change_by_callback($post_array) {
+		$member_in = $this->_is_member_in();
+		
+		$post_array['change_by'] = $member_in["id_user"];
+		return $post_array;
+	}   
+	
+	
+	public function berita()
+	{	
+		
 		try{
 			$crud = new grocery_CRUD();
-
+			//print_r($crud->callback_before_update(array($this,'get_change_by'))); exit;
 			$crud->set_table('tbl_berita');
 			$crud->set_subject('Berita');
+			$crud->set_relation('change_by','tbl_user','email');
 			$crud->set_field_upload('gambar','assets/uploads/gambar');
 			
 			$crud->required_fields('judul', 'berita_singkat', 'berita_penuh');
-			$crud->fields('judul', 'berita_singkat', 'berita_penuh', 'gambar');
-			$crud->display_as('berita_singkat','Headline')->display_as('berita_penuh','Isi Berita');
+			
+			$crud->fields('judul', 'berita_singkat', 'berita_penuh', 'gambar', 'change_by');
+			$crud->display_as('berita_singkat','Headline')
+				 ->display_as('berita_penuh','Isi Berita');
 			$crud->columns('judul','berita_singkat','berita_penuh');
 			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->change_field_type('change_by','readonly');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 
@@ -144,7 +172,7 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-	public function faq()
+	public function daftar_faq()
 	{
 		try{
 			$crud = new grocery_CRUD();
@@ -217,7 +245,52 @@ class Admin extends CI_Controller {
 			$crud->required_fields('judul', 'deskripsi');
 			$crud->fields('judul', 'deskripsi', 'gambar');
 			$crud->columns('judul', 'deskripsi');
+			//$crud->change_field_type('judul', 'readonly');
 			$crud->order_by('id_konten_statis','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function modul_kategori()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_modul_kategori');
+			$crud->set_subject('Kategori Modul');
+			//set_relation_n_n( string $field_name, string $relation_table, string $selection_table, string $primary_key_alias_to_this_table, string $primary_key_alias_to_selection_table , string $title_field_selection_table [ , string $priority_field_relation ] )
+			//$crud->set_relation_n_n('category', 'film_category', 'category', 'film_id', 'category_id', 'name');
+			$crud->set_relation_n_n('Users', 'tbl_modul_user', 'tbl_user_kategori', 'id_modul_kategori', 'id_user_kategori', 'user_kategori');
+			//$crud->display_as('id_user_kategori','Kategori User');
+			$crud->required_fields('Users', 'kategori_modul', 'icon', 'no_urut');
+			$crud->fields('Users', 'kategori_modul', 'icon', 'no_urut');
+			$crud->columns('Users', 'id_user_kategori', 'kategori_modul', 'icon', 'no_urut');
+			$crud->order_by('id_modul_kategori','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function daftar_modul()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_modul');
+			$crud->set_subject('Modul');
+			$crud->set_relation('id_modul_kategori','tbl_modul_kategori','kategori_modul');
+			$crud->display_as('id_modul_kategori','Kategori Modul');
+			$crud->required_fields('id_modul_kategori', 'modul', 'url', 'icon', 'no_urut');
+			$crud->fields('id_modul_kategori', 'modul', 'url', 'icon', 'no_urut');
+			$crud->columns('id_modul_kategori', 'modul', 'icon', 'no_urut');
+			$crud->order_by('id_modul','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 
