@@ -5,16 +5,19 @@
         </td>
         <td>
                 <div class="only-desktops"  style="white-space: nowrap">
-                    <?php if(!$unset_edit){?>
-                        <a class="btn btn-default" href="<?php echo $row->edit_url?>"><i class="fa fa-pencil"></i> <?php echo $this->l('list_edit'); ?></a>
-                    <?php } ?>
+                    
                     <div class="btn-group dropdown">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             Aksi
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <?php
+                            <?php if(!$unset_edit){?>
+                            	<li>
+                                <a class="" href="<?php echo $row->edit_url?>" title="<?php echo $this->l('list_edit')?>"><i class="fa fa-pencil"></i> <?php echo $this->l('list_edit'); ?></a>
+                            	</li>
+							<?php } ?>
+							<?php
                             if(!empty($row->action_urls)){
                                 foreach($row->action_urls as $action_unique_id => $action_url){
                                     $action = $actions[$action_unique_id];
@@ -40,6 +43,7 @@
                                     </a>
                                 </li>
                             <?php } ?>
+                            
                         </ul>
                     </div>
                 </div>

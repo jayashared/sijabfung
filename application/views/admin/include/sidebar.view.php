@@ -25,13 +25,7 @@
                 <a href="#"><i class="fa fa-files-o fa-fw"></i> Master<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="<?php echo base_url() ?>admin/ulp">ULP</a>
-                    </li>
-                    <li>
                         <a href="<?php echo base_url() ?>admin/link"><i class="fa fa-link"></i> Link</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/unit_kerja">Unit Kerja</a>
                     </li>
                     <li>
                         <a href="<?php echo base_url() ?>admin/faq_kategori">FAQ Kategori</a>
@@ -43,7 +37,7 @@
                         <a href="<?php echo base_url() ?>admin/download">Download</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url() ?>admin/gallery">Gallery</a>
+                        <a href="<?php echo base_url() ?>admin/gallery_kategori">Gallery</a>
                     </li>
                     <li>
                         <a href="<?php echo base_url() ?>admin/konten_statis">Konten Statis</a>

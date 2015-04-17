@@ -25,34 +25,65 @@ class Admin extends CI_Controller {
 		
 		$post_array['change_by'] = $member_in["id_user"];
 		return $post_array;
-	}   
+	}
 	
+	public function format_date_callback($date)
+	{
+		
+		if(!empty($date))
+		{
+			$arr_date_time = explode(" ", $date);
+			$arr_date = explode("-", $arr_date_time[0]);
+			$time = isset($arr_date_time[1])?$arr_date_time[1]:"";
+			$date = $arr_date[2] . "/" . $arr_date[1] . "/" . $arr_date[0] . " " . $time; 
+		}
+		else
+		{
+			$date = "";
+		}
+		return $date;
+	}
+	
+	public function index()
+	{
+		$this->berita();
+	}
 	
 	public function berita()
 	{	
 		
 		try{
 			$crud = new grocery_CRUD();
-			//print_r($crud->callback_before_update(array($this,'get_change_by'))); exit;
 			$crud->set_table('tbl_berita');
 			$crud->set_subject('Berita');
 			$crud->set_relation('change_by','tbl_user','email');
 			$crud->set_field_upload('gambar','assets/uploads/gambar');
 			
-			$crud->required_fields('judul', 'berita_singkat', 'berita_penuh');
+			$crud->required_fields('tanggal_berita', 'judul', 'berita_singkat', 'berita_penuh');
 			
-			$crud->fields('judul', 'berita_singkat', 'berita_penuh', 'gambar', 'change_by');
+			$crud->add_fields('tanggal_berita', 'judul', 'berita_singkat', 'berita_penuh', 'gambar', 'change_by', 'change_date');
+			$crud->edit_fields('tanggal_berita', 'judul', 'berita_singkat', 'berita_penuh', 'gambar', 'change_by', 'change_date');
 			$crud->display_as('berita_singkat','Headline')
-				 ->display_as('berita_penuh','Isi Berita');
-			$crud->columns('judul','berita_singkat','berita_penuh');
+				 ->display_as('berita_penuh','Isi Berita')
+				 ->display_as('change_by', 'Input / Edit oleh')
+				 ->display_as('change_date', 'Input / Edit Tanggal')
+				 ;
+			$crud->columns('tanggal_berita', 'judul', 'berita_singkat', 'change_by');
 			
 			$crud->callback_before_update(array($this,'get_change_by_callback'));
 			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			
 			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			
+			$crud->order_by('id_berita','desc');
+			$crud->unset_read();
+			
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 
-		}catch(Exception $e){
+		} catch(Exception $e){
 			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
 	}
@@ -60,16 +91,33 @@ class Admin extends CI_Controller {
 	public function pengumuman()
 	{
 		try{
+			
 			$crud = new grocery_CRUD();
-
 			$crud->set_table('tbl_pengumuman');
 			$crud->set_subject('Pengumuman');
+			
+			$crud->set_relation('change_by','tbl_user','email');
+			
 			$crud->set_field_upload('berkas','assets/uploads/berkas');
 			
-			$crud->required_fields('judul');
-			$crud->fields('judul', 'isi_pengumuman', 'berkas');
-			$crud->columns('judul', 'isi_pengumuman');;
+			$crud->required_fields('judul', 'tanggal_pengumuman', 'isi_pengumuman');
 			
+			$crud->add_fields('judul', 'tanggal_pengumuman', 'isi_pengumuman', 'berkas', 'change_by', 'change_date');
+			$crud->edit_fields('judul', 'tanggal_pengumuman', 'isi_pengumuman', 'berkas', 'change_by', 'change_date');
+			$crud->display_as('change_by', 'Input / Edit oleh')
+				 ->display_as('change_date', 'Input / Edit Tanggal')
+				 ;
+				 
+			$crud->columns('tanggal_pengumuman', 'judul', 'isi_pengumuman', 'change_by');;
+			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			$crud->unset_read();
+			$crud->order_by('id_pengumuman','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 
@@ -86,64 +134,23 @@ class Admin extends CI_Controller {
 			$crud->set_table('tbl_link');
 			$crud->set_subject('Link Terkait');
 			
+			$crud->set_relation('change_by','tbl_user','email');
+			
 			$crud->required_fields('title', 'url');
-			$crud->fields('title', 'url');
+			$crud->add_fields('title', 'url', 'change_by', 'change_date');
+			$crud->edit_fields('title', 'url', 'change_by', 'change_date');
 			$crud->display_as('title','Judul Link')->display_as('url','URL');
-			$crud->columns('title', 'url');
+			
+			$crud->columns('title', 'url', 'change_by');
+			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			$crud->unset_read();
 			$crud->order_by('id_link','desc');
-			$output = $crud->render();
-			$this->load->view('admin/themes/default', $output);
-
-		}catch(Exception $e){
-			show_error($e->getMessage().' --- '.$e->getTraceAsString());
-		}
-	}
-	
-	public function unit_kerja()
-	{
-		try{
-			$crud = new grocery_CRUD();
-
-			$crud->set_table('tbl_unitkerja');
-			$crud->set_subject('Daftar Unit Kerja');
-			$crud->required_fields('name', 'kode_institusi');
-			$crud->fields('name', 'kode_institusi', 'kepala_nama', 'kepala_nip', 'kepala_pangkat', 'id_jabatan', 'status');
-			$crud->set_relation('id_jabatan','tbl_jabatan','jabatan');
-			$crud->display_as('kepala_nama','Nama Kepala')
-				 ->display_as('kepala_nip','NIP Kepala')
-				 ->display_as('kepala_pangkat','Pangkat Kepala')
-				 ->display_as('kepala_jabatan','Jabatan Kepala')
-				 ->display_as('id_jabatan','Pangkat/Jabatan')
-				 ;
-			$crud->columns('name','kode_institusi','kepala_nama', 'kepala_nip', 'kepala_pangkat', 'kepala_jabatan');
-			$crud->order_by('id_unit_kerja','desc');
-			$output = $crud->render();
-			$this->load->view('admin/themes/default', $output);
-
-		}catch(Exception $e){
-			show_error($e->getMessage().' --- '.$e->getTraceAsString());
-		}
-	}
-	
-	public function ulp()
-	{
-		try{
-			$crud = new grocery_CRUD();
-
-			$crud->set_table('tbl_ulp');
-			$crud->set_subject('Daftar ULP');
-			$crud->required_fields('nama_ulp', 'id_unit_kerja');
-			$crud->set_relation('id_unit_kerja','tbl_unitkerja','name');
-			$crud->fields('nama_ulp', 'id_unit_kerja', 'kepala_nip', 'kepala_pangkat', 'kepala_nama');
-			$crud->display_as('kepala_nama','Nama Kepala')
-				 ->display_as('kepala_nip','NIP Kepala')
-				 ->display_as('kepala_pangkat','Pangkat Kepala')
-				 ->display_as('kepala_jabatan','Jabatan Kepala')
-				 ->display_as('id_jabatan','Pangkat/Jabatan')
-				 ->display_as('id_unit_kerja','Unit Kerja')
-				 ;
-			$crud->columns('nama_ulp','id_unit_kerja', 'kepala_nama', 'kepala_nip', 'kepala_pangkat', 'kepala_jabatan');
-			$crud->order_by('id_unit_kerja','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 
@@ -160,9 +167,23 @@ class Admin extends CI_Controller {
 			$crud->set_table('tbl_faq_kategori');
 			$crud->set_subject('Kategori FAQ');
 			
+			$crud->set_relation('change_by','tbl_user','email');
+			
 			$crud->required_fields('kategori');
-			$crud->fields('kategori');
-			$crud->columns('kategori');
+			$crud->add_fields('kategori', 'change_by', 'change_date');
+			$crud->edit_fields('kategori', 'change_by', 'change_date');
+			
+			$crud->columns('kategori', 'change_by');
+			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			
+			$crud->unset_read();
+			
 			$crud->order_by('id_faq_kategori','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
@@ -178,12 +199,27 @@ class Admin extends CI_Controller {
 			$crud = new grocery_CRUD();
 
 			$crud->set_table('tbl_faq');
-			$crud->set_subject('Daftar FAQ');
-			$crud->required_fields('pertanyaan', 'jawaban', 'tampilkan');
 			$crud->set_relation('id_faq_kategori','tbl_faq_kategori','kategori');
+			$crud->set_relation('change_by','tbl_user','email');
+			
+			$crud->set_subject('Daftar FAQ');
+			
+			$crud->required_fields('pertanyaan', 'jawaban', 'tampilkan');
 			$crud->display_as('id_faq_kategori','Kategori');
-			$crud->fields('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan');
-			$crud->columns('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan');
+			$crud->add_fields('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan', 'change_by', 'change_date');
+			$crud->edit_fields('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan', 'change_by', 'change_date');
+			
+			$crud->columns('pertanyaan', 'id_faq_kategori', 'tampilkan', 'change_by');
+			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			
+			$crud->unset_read();
+			
 			$crud->order_by('id_faq','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
@@ -198,13 +234,30 @@ class Admin extends CI_Controller {
 		try{
 			$crud = new grocery_CRUD();
 
-			$crud->set_table('tbl_download_content');
+			$crud->set_table('tbl_download');
+			$crud->set_relation('id_download_kategori','tbl_download_kategori','download_kategori');
+			$crud->set_relation('change_by','tbl_user','email');
+			
 			$crud->set_subject('Daftar Download');
+			
 			$crud->set_field_upload('berkas','assets/uploads/berkas');
-			$crud->required_fields('judul', 'berkas');
-			$crud->fields('judul', 'deskripsi', 'berkas');
-			$crud->columns('judul', 'deskripsi');
-			$crud->order_by('id_download_content','desc');
+			
+			$crud->required_fields('id_download_kategori', 'judul', 'berkas');
+			
+			$crud->add_fields('id_download_kategori', 'judul', 'deskripsi', 'berkas', 'change_by', 'change_date');
+			$crud->edit_fields('id_download_kategori', 'judul', 'deskripsi', 'berkas', 'change_by', 'change_date');
+			$crud->display_as("id_download_kategori", "Kategori");
+			$crud->columns('judul', 'deskripsi', 'change_by');
+			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			
+			$crud->unset_read();
+			$crud->order_by('id_download','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 
@@ -216,16 +269,58 @@ class Admin extends CI_Controller {
 	
 	public function gallery()
 	{
+		$id_gallery_kategori = $this->uri->segment(3);
 		try{
 			$crud = new grocery_CRUD();
 
+			$crud->where("tbl_gallery.id_gallery_kategori", $id_gallery_kategori);
 			$crud->set_table('tbl_gallery');
+			
 			$crud->set_subject('Gallery');
+			$crud->set_relation('change_by','tbl_user','email');
+			$crud->set_relation('id_gallery_kategori', 'tbl_gallery_kategori', 'gallery_kategori');
+			$crud->display_as('id_gallery_kategori','Kategori');
 			$crud->set_field_upload('gambar','assets/uploads/gambar');
 			$crud->required_fields('judul', 'gambar');
-			$crud->fields('judul', 'deskripsi', 'gambar');
-			$crud->columns('judul', 'deskripsi', 'gambar');
+			
+			
+			$crud->fields('judul', 'deskripsi', 'gambar', 'id_gallery_kategori', 'change_by', 'change_date');
+			$crud->columns('id_gallery_kategori', 'judul', 'deskripsi', 'gambar', 'change_by', 'change_date');
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			$crud->unset_read();
 			$crud->order_by('id_gallery','desc');
+			$output = $crud->render();
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function gallery_kategori()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_gallery_kategori');
+			$crud->set_subject('Gallery');
+			$crud->set_relation('change_by','tbl_user','email');
+			$crud->required_fields('gallery_kategori');
+			$crud->add_fields('gallery_kategori', 'change_by', 'change_date');
+			$crud->edit_fields('gallery_kategori', 'change_by', 'change_date');
+			$crud->columns('gallery_kategori', 'change_by', 'change_date');
+			$crud->callback_column('change_date',array($this,'format_date_callback'));
+			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			
+			$crud->unset_read();
+			$crud->add_action('Unggah gambar', '', 'admin/gallery', 'ui-icon-plus');
+			$crud->order_by('id_gallery_kategori','desc');
 			$output = $crud->render();
 			$this->load->view('admin/themes/default', $output);
 

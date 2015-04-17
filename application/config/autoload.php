@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database', 'session', 'grocery_CRUD');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'file');
+$autoload['helper'] = array('url', 'file', 'general_helper');
 
 
 /*
