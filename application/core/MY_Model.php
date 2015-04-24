@@ -17,6 +17,7 @@ class MY_Model extends CI_Model {
 	
 	public function get_all_data()
 	{
+		if( !empty($this->orderBy) ) $this->db->order_by($this->orderBy);
 		$query = $this->db->get($this->myTable);
 		return $query->result();
 	}
@@ -38,8 +39,14 @@ class MY_Model extends CI_Model {
 	
 	public function get_lastest_data($limit=3)
 	{
+		$this->db->order_by($this->orderBy);
 		$this->db->limit($limit);
 		$query = $this->db->get($this->myTable);
 		return $query->result();
+	}
+	
+	public function count_all()
+	{
+		return $this->db->count_all_results($this->myTable);
 	}
 }

@@ -1,5 +1,5 @@
 create or replace view tbl_berita_view as 
-select 		b.id_berita, b.tanggal_berita, b.judul, b.berita_singkat, b.berita_penuh,
+select 		b.id_berita, b.tanggal_berita, b.judul, b.berita_penuh,
 				if(b.gambar <> '', concat('assets/uploads/gambar/', b.gambar), 
 				concat('assets/images/', 'No_image_available.jpg')) as gambar,
 				b.change_date, b.change_by, u.email

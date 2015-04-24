@@ -1,0 +1,2 @@
+1. Import Jabfung.sql
+2. Import File yang ada di folder view 1/1

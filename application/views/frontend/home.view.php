@@ -3,7 +3,7 @@
 ?>
 
 <!-- BEGIN LEFT SIDEBAR -->         
-<div class="col-md-8 col-sm-8 blog-posts margin-bottom-40">
+<div class="col-md-9 col-sm-9 blog-posts margin-bottom-40">
     <div class="blog-item-img margin-bottom-40">
         <!-- BEGIN CAROUSEL -->            
         <div class="front-carousel">
@@ -54,7 +54,7 @@
                 <!--<li><i class="fa fa-tags"></i> Metronic, Keenthemes, UI Design</li>-->
             </ul>
             <p>
-                <?php echo PotongKata($row->berita_singkat, 50); ?>
+                <?php echo PotongKata($row->berita_penuh, 50); ?>
                 <a class="more" href="#">Selengkapnya... <i class="icon-angle-right"></i></a>
             </p>
             

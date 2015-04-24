@@ -2,6 +2,8 @@
 
 class Admin extends CI_Controller {
 
+	var $data = array();
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -13,6 +15,13 @@ class Admin extends CI_Controller {
 			$this->session->set_flashdata('pesan', $message);
 			redirect("login");
 		}
+		
+		$sitemap = $this->admin_sitemap();
+		$data = array(
+			"sitemap"=>$sitemap
+		);
+		
+		$this->data = $data;
 	}
 	
 	public function _is_member_in()
@@ -42,6 +51,25 @@ class Admin extends CI_Controller {
 			$date = "";
 		}
 		return $date;
+	}
+	
+	public function admin_sitemap()
+	{
+		$this->load->model("Sitemap_m");
+		$sitemap = $this->Sitemap_m->daftar_sitemap_admin(array("level_sitemap"=>"2"));
+		foreach( $sitemap as $row )
+		{
+			$id_parent = $row->id_sitemap;
+			$where = array("id_parent"=>$id_parent, "level_sitemap"=>"3");
+			$row->sub_sitemap = $this->Sitemap_m->daftar_sitemap_admin($where);
+		}
+		
+		return $sitemap;
+	}
+	
+	public function get_sitemap()
+	{
+		return $this->data;
 	}
 	
 	public function index()
@@ -80,7 +108,9 @@ class Admin extends CI_Controller {
 			$crud->order_by('id_berita','desc');
 			$crud->unset_read();
 			
-			$output = $crud->render();
+			$sitemap = $this->get_sitemap();
+			//print_r($data); exit;
+			$output = $crud->render($sitemap);
 			$this->load->view('admin/themes/default', $output);
 
 		} catch(Exception $e){
@@ -118,7 +148,10 @@ class Admin extends CI_Controller {
 			$crud->change_field_type('change_date','readonly');
 			$crud->unset_read();
 			$crud->order_by('id_pengumuman','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -151,7 +184,10 @@ class Admin extends CI_Controller {
 			$crud->change_field_type('change_date','readonly');
 			$crud->unset_read();
 			$crud->order_by('id_link','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -185,7 +221,10 @@ class Admin extends CI_Controller {
 			$crud->unset_read();
 			
 			$crud->order_by('id_faq_kategori','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -204,10 +243,10 @@ class Admin extends CI_Controller {
 			
 			$crud->set_subject('Daftar FAQ');
 			
-			$crud->required_fields('pertanyaan', 'jawaban', 'tampilkan');
+			$crud->required_fields('id_faq_kategori', 'pertanyaan', 'jawaban', 'tampilkan');
 			$crud->display_as('id_faq_kategori','Kategori');
-			$crud->add_fields('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan', 'change_by', 'change_date');
-			$crud->edit_fields('pertanyaan', 'jawaban','id_faq_kategori', 'tampilkan', 'change_by', 'change_date');
+			$crud->add_fields('id_faq_kategori', 'pertanyaan', 'jawaban', 'tampilkan', 'change_by', 'change_date');
+			$crud->edit_fields('id_faq_kategori', 'pertanyaan', 'jawaban', 'tampilkan', 'change_by', 'change_date');
 			
 			$crud->columns('pertanyaan', 'id_faq_kategori', 'tampilkan', 'change_by');
 			
@@ -221,7 +260,10 @@ class Admin extends CI_Controller {
 			$crud->unset_read();
 			
 			$crud->order_by('id_faq','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -229,7 +271,44 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-	public function download()
+	public function referensi_kategori()
+	{
+		try{
+			$crud = new grocery_CRUD();
+
+			$crud->set_table('tbl_download_kategori');
+			$crud->set_subject('Kategori Referensi');
+			
+			$crud->set_relation('change_by','tbl_user','email');
+			
+			$crud->required_fields('download_kategori');
+			$crud->add_fields('download_kategori', 'change_by', 'change_date');
+			$crud->edit_fields('download_kategori', 'change_by', 'change_date');
+			
+			$crud->columns('download_kategori', 'change_by');
+			
+			$crud->callback_before_update(array($this,'get_change_by_callback'));
+			$crud->callback_before_insert(array($this,'get_change_by_callback'));
+			$crud->callback_field('change_date',array($this,'format_date_callback'));
+			
+			$crud->change_field_type('change_by','readonly');
+			$crud->change_field_type('change_date','readonly');
+			
+			$crud->unset_read();
+			
+			$crud->order_by('id_download_kategori','desc');
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
+			$this->load->view('admin/themes/default', $output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+	}
+	
+	public function referensi()
 	{
 		try{
 			$crud = new grocery_CRUD();
@@ -258,7 +337,10 @@ class Admin extends CI_Controller {
 			
 			$crud->unset_read();
 			$crud->order_by('id_download','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -290,7 +372,10 @@ class Admin extends CI_Controller {
 			$crud->change_field_type('change_date','readonly');
 			$crud->unset_read();
 			$crud->order_by('id_gallery','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -321,7 +406,10 @@ class Admin extends CI_Controller {
 			$crud->unset_read();
 			$crud->add_action('Unggah gambar', '', 'admin/gallery', 'ui-icon-plus');
 			$crud->order_by('id_gallery_kategori','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -336,13 +424,17 @@ class Admin extends CI_Controller {
 
 			$crud->set_table('tbl_konten_statis');
 			$crud->set_subject('Konten Statis');
+			
 			$crud->set_field_upload('gambar','assets/uploads/gambar');
 			$crud->required_fields('judul', 'deskripsi');
 			$crud->fields('judul', 'deskripsi', 'gambar');
 			$crud->columns('judul', 'deskripsi');
 			//$crud->change_field_type('judul', 'readonly');
 			$crud->order_by('id_konten_statis','desc');
-			$output = $crud->render();
+			
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -350,22 +442,32 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-	public function modul_kategori()
+	public function sitemap()
 	{
 		try{
 			$crud = new grocery_CRUD();
 
-			$crud->set_table('tbl_modul_kategori');
-			$crud->set_subject('Kategori Modul');
-			//set_relation_n_n( string $field_name, string $relation_table, string $selection_table, string $primary_key_alias_to_this_table, string $primary_key_alias_to_selection_table , string $title_field_selection_table [ , string $priority_field_relation ] )
-			//$crud->set_relation_n_n('category', 'film_category', 'category', 'film_id', 'category_id', 'name');
-			$crud->set_relation_n_n('Users', 'tbl_modul_user', 'tbl_user_kategori', 'id_modul_kategori', 'id_user_kategori', 'user_kategori');
+			$state = $crud->getState();
+
+			$crud->set_table('tbl_sitemap');
+			$crud->set_subject('Sitemap');
+			if($state == 'edit' or $state == 'add')
+			{
+				  $crud->set_relation('id_parent', 'tbl_sitemap', 'deskripsi');
+			}
+
+			$crud->set_relation_n_n('Users', 'tbl_sitemap_user', 'tbl_user_kategori', 'id_sitemap', 'id_user_kategori', 'user_kategori');
 			//$crud->display_as('id_user_kategori','Kategori User');
-			$crud->required_fields('Users', 'kategori_modul', 'icon', 'no_urut');
-			$crud->fields('Users', 'kategori_modul', 'icon', 'no_urut');
-			$crud->columns('Users', 'id_user_kategori', 'kategori_modul', 'icon', 'no_urut');
-			$crud->order_by('id_modul_kategori','desc');
-			$output = $crud->render();
+			$crud->required_fields('id_parent', 'no_sitemap', 'kategori_modul', 'no_urut');
+			$crud->unique_fields('no_sitemap');
+			$crud->fields('Users', 'id_parent', 'no_sitemap', 'sitemap', 'deskripsi', 'judul', 'icon', 'url', 'no_urut');
+			$crud->columns('no_sitemap', 'sitemap', 'judul', 'no_urut');
+			$crud->order_by('no_sitemap','asc');
+			
+			$crud->unset_read();
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){
@@ -373,20 +475,27 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-	public function daftar_modul()
+	public function biodata()
 	{
 		try{
 			$crud = new grocery_CRUD();
 
-			$crud->set_table('tbl_modul');
-			$crud->set_subject('Modul');
-			$crud->set_relation('id_modul_kategori','tbl_modul_kategori','kategori_modul');
-			$crud->display_as('id_modul_kategori','Kategori Modul');
-			$crud->required_fields('id_modul_kategori', 'modul', 'url', 'icon', 'no_urut');
-			$crud->fields('id_modul_kategori', 'modul', 'url', 'icon', 'no_urut');
-			$crud->columns('id_modul_kategori', 'modul', 'icon', 'no_urut');
-			$crud->order_by('id_modul','desc');
-			$output = $crud->render();
+			$crud->set_table('tbl_biodata');
+			$crud->set_subject('Biodata');
+			$crud->set_relation('id_parent', 'tbl_sitemap', 'deskripsi');
+
+			$crud->set_relation_n_n('Users', 'tbl_sitemap_user', 'tbl_user_kategori', 'id_sitemap', 'id_user_kategori', 'user_kategori');
+			//$crud->display_as('id_user_kategori','Kategori User');
+			$crud->required_fields('Users', 'id_parent', 'no_sitemap', 'kategori_modul', 'no_urut');
+			$crud->unique_fields('no_sitemap');
+			$crud->fields('Users', 'id_parent', 'no_sitemap', 'sitemap', 'judul', 'icon', 'url', 'no_urut');
+			$crud->columns('no_sitemap', 'sitemap', 'judul', 'no_urut');
+			$crud->order_by('no_sitemap','asc');
+			
+			$crud->unset_read();
+			$sitemap = $this->get_sitemap();
+			$output = $crud->render($sitemap);
+			
 			$this->load->view('admin/themes/default', $output);
 
 		}catch(Exception $e){

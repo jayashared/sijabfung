@@ -3,10 +3,7 @@
 ?>
 
 <!-- BEGIN LEFT SIDEBAR -->   
-    
-<div class="col-md-8 col-sm-8 blog-posts margin-bottom-40">
-	<h2><i class="fa fa-newspaper-o"></i> Berita</h2> 
-    <hr class="blog-post-sep"> 
+<div class="col-md-9 col-sm-9 blog-posts margin-bottom-40">
 	<?php
         foreach( $berita as $row )
         {
@@ -18,15 +15,15 @@
         	</a>
         </div>
         <div class="col-md-10 col-sm-10">
-            <h2><a href="blog_item.html"><?php echo $row->judul ?></a></h2>
+            <h2><a href="<?php echo base_url() ?>frontend/berita_detail/<?php echo $row->id_berita ?>/<?php echo SEO($row->judul) ?>"><?php echo $row->judul ?></a></h2>
             <ul class="blog-info">
                 <li><i class="fa fa-calendar"></i> <?php echo TglOnlyIndo($row->tanggal_berita) ?></li>
                 <li><i class="fa fa-user"></i> <?php echo $row->email ?></li>
                 <!--<li><i class="fa fa-tags"></i> Metronic, Keenthemes, UI Design</li>-->
             </ul>
             <p>
-                <?php echo PotongKata($row->berita_singkat, 50); ?>
-                <a class="more" href="#">Selengkapnya... <i class="icon-angle-right"></i></a>
+                <?php echo PotongKata($row->berita_penuh, 50); ?>
+                <a class="more" href="<?php echo base_url() ?>frontend/berita_detail/<?php echo $row->id_berita ?>/<?php echo SEO($row->judul) ?>">Selengkapnya... <i class="icon-angle-right"></i></a>
             </p>
             
         </div>
@@ -35,6 +32,10 @@
     <?php
         }
     ?>
+    <ul class="pagination">
+    	<?php echo $paging ?>
+    </ul>
     <!-- END BLOG TAGS -->
 </div>
 <!-- END RIGHT SIDEBAR -->
+

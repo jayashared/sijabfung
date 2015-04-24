@@ -4,9 +4,8 @@
 
 <!-- BEGIN LEFT SIDEBAR -->   
     
-<div class="col-md-8 col-sm-8 blog-posts margin-bottom-40">
-	<h2><i class="fa fa-cloud-download"></i> Referensi</h2>  
-    <hr class="blog-post-sep">
+<div class="col-md-9 col-sm-9 blog-posts margin-bottom-40">
+
 	<?php
         foreach( $download as $row )
         {

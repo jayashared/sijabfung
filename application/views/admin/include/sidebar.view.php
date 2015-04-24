@@ -1,3 +1,8 @@
+<?php 
+	
+	$sitemap = isset($extra['sitemap'])?$extra['sitemap']:"";
+?>
+
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
@@ -15,42 +20,36 @@
             <li>
                 <a href="<?php echo base_url() ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-            <li>
-                <a href="<?php echo base_url() ?>admin/berita"class=""><i class="fa fa-newspaper-o"></i> Berita</a>
-            </li>
-            <li>
-                <a href="<?php echo base_url() ?>admin/pengumuman" class=""><i class="fa fa-table fa-fw"></i> Pengumuman</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-files-o fa-fw"></i> Master<span class="fa arrow"></span></a>
+            <?php
+            	foreach( $sitemap as $row )
+				{
+			?>
+            <li id="<?php echo $row->sitemap ?>">
+                <a href="<?php echo !empty($row->url)?base_url() . 'admin/' . $row->url:"#" ?>"><?php echo $row->icon ?> <?php echo $row->judul ?>
+                <?php echo !empty($row->sub_sitemap)?'<span class="fa arrow"></span>':'' ?>
+                </a>
+                <?php if( !empty($row->sub_sitemap) ){ ?>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/link"><i class="fa fa-link"></i> Link</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/faq_kategori">FAQ Kategori</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/daftar_faq">FAQ</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/download">Download</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/gallery_kategori">Gallery</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/konten_statis">Konten Statis</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/modul_kategori">Kategori Modul</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url() ?>admin/daftar_modul">Modul</a>
-                    </li>
+				<?php } ?>
+				<?php
+                	foreach( $row->sub_sitemap as $rsub )
+					{
+				?>
+                		
+                            <li>
+                                <a href="<?php echo base_url() ?>admin/<?php echo $rsub->url ?>"><?php echo $rsub->judul ?></a>
+                            </li>                        
+                <?php		
+					}
+                ?>
+                <?php if( !empty($row->sub_sitemap) ){ ?>
                 </ul>
+                <?php } ?>
                 <!-- /.nav-second-level -->
             </li>
+            <?php
+				}
+			?>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

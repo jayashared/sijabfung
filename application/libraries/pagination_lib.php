@@ -1,11 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Pagination_lib extends CI_Controller {
-	public function paging($data=array())
+	
+	public function paging($pag=array())
 	{
-		$config['base_url'] = $data["url"];
-		$config['total_rows'] = $data["total_rows"];
-		$config['per_page'] = $data["per_page"]; 
+		$config['base_url'] = $pag["url"];
+		$config['total_rows'] = $pag["total_rows"];
+		$config['per_page'] = $pag["per_page"]; 
 		$config['page_query_string'] = TRUE;
 		$config['use_page_numbers'] = TRUE;
 		$config['query_string_segment'] = "page";
@@ -29,4 +30,5 @@ class Pagination_lib extends CI_Controller {
 		
 		return $this->pagination->create_links();
 	}
+	
 }

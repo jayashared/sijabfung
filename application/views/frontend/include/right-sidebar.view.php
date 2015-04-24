@@ -7,7 +7,7 @@
     <?php
     	$pengumuman = isset($pengumuman)?$pengumuman:"";
 	?>                       
-    <h2><i class="fa fa-bullhorn"></i> Pengumuman</h2>
+    <h2> Pengumuman</h2>
     <div class="recent-news margin-bottom-10">
         <div class="row margin-bottom-10">
             <?php
@@ -28,26 +28,9 @@
         </div>
     </div>
     <!-- END Pengumuman -->                            
-
-    <!-- CATEGORIES START -->
-    <?php
-    	$link = isset($link)?$link:"";
-	?>
-    <h2><i class="fa fa-link"></i> Link</h2>
-    <ul class="nav sidebar-categories margin-bottom-40">
-        <?php
-        	foreach($link as $rl)
-			{
-		?>
-        	<li><a href="<?php echo $rl->url ?>" target="_blank"><?php echo $rl->title ?></a></li>
-		<?php
-			}
-		?>
-    </ul>
-    <!-- CATEGORIES END -->
-
+	
     <!-- BEGIN BLOG PHOTOS STREAM -->
-    <!--<div class="blog-photo-stream margin-bottom-20">
+    <div class="blog-photo-stream margin-bottom-20">
         <h2>Gallery</h2>
         <ul class="list-unstyled">
             <li><a href="#"><img src="<?php echo base_url() ?>assets/frontend/template_content/assets/img/people/img5-small.jpg" alt=""></a></li>
@@ -59,8 +42,25 @@
             <li><a href="#"><img src="<?php echo base_url() ?>assets/frontend/template_content/assets/img/works/img3.jpg" alt=""></a></li>
             <li><a href="#"><img src="<?php echo base_url() ?>assets/frontend/template_content/assets/img/people/img2-large.jpg" alt=""></a></li>
         </ul>                    
-    </div>-->
+    </div>
     <!-- END BLOG PHOTOS STREAM -->
+    
+    <!-- CATEGORIES START -->
+    <?php
+    	$link = isset($link)?$link:"";
+	?>
+    <h2> Link</h2>
+    <ul class="nav sidebar-categories margin-bottom-40">
+        <?php
+        	foreach($link as $rl)
+			{
+		?>
+        	<li><a href="<?php echo $rl->url ?>" target="_blank"><?php echo $rl->title ?></a></li>
+		<?php
+			}
+		?>
+    </ul>
+    <!-- CATEGORIES END -->
 
 </div>
 <!-- END RIGHT SIDEBAR --> 
