@@ -18,7 +18,7 @@
     }
 
     //section libs
-    $this->set_js_lib($this->default_theme_path.'/bootstrap/js/bootstrap/dropdown.min.js');
+    //$this->set_js_lib($this->default_theme_path.'/bootstrap/js/bootstrap/dropdown.min.js');
     $this->set_js_lib($this->default_theme_path.'/bootstrap/js/bootstrap/modal.min.js');
     $this->set_js_lib($this->default_theme_path.'/bootstrap/js/jquery-plugins/bootstrap-growl.min.js');
     $this->set_js_lib($this->default_theme_path.'/bootstrap/js/jquery-plugins/jquery.print-this.js');
@@ -117,8 +117,10 @@
         						<tr class="filter-row gc-search-row bg-silver">
         							<td style="border-right: none;">
         							     <div class="floatL t5">
+                                         <?php if(!$unset_delete) { ?>
         							         <input type="checkbox" class="select-all-none" />
-        							     </div>
+        							     <?php } ?>
+                                         </div>
         							 </td>
         							<td style="border-left: none;">
                                         <div class="floatL">

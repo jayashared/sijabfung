@@ -26,6 +26,14 @@ class Frontend extends CI_Controller {
 		$this->data = $data;
 	}
 	
+	public function get_alert($info=NULL, $pesan=NULL)
+	{
+		if( $info == "success" )
+		return '<div class="alert alert-success" role="alert">' . $pesan . '</div>';
+		else
+		return '<div class="alert alert-danger" role="alert">' . $pesan . '</div>';
+	}
+	
 	public function paging($pag=array())
 	{
 		$config['base_url'] = $pag["url"];
@@ -231,7 +239,11 @@ class Frontend extends CI_Controller {
 	{
 		try
 		{
+			$this->load->model("wilayah_m");
+			
+			
 			$data = $this->get_right_sidebar();
+			$data["wilayah"] = $this->wilayah_m->daftar_wilayah();
 			$data["konten"] = "frontend/content/registrasi/registrasi-form.view.php";
 			$this->load->view('frontend/index', $data);
 		} catch(Exception $e){
@@ -239,12 +251,107 @@ class Frontend extends CI_Controller {
 		}
 	}
 	
+	public function registrasi_check_email_exist()
+	{
+		try
+		{
+			$this->load->model("user_m");
+			
+			$email = $this->input->post("email");
+			if( $this->user_m->check_email_exist($email) )
+				echo "false";
+			else
+				echo "true";
+				
+		} catch(Exception $e){
+			echo "false";
+		}
+	}
+	
+	public function registrasi_check_nip_exist()
+	{
+		try
+		{
+			$this->load->model("user_m");
+			
+			$nip = $this->input->post("nip");
+			if( $this->user_m->check_nip_exist($nip) )
+				echo "false";
+			else
+				echo "true";
+				
+		} catch(Exception $e){
+			echo "false";
+		}
+	}
+	
 	public function registrasi_proses()
 	{
-		$nip = $this->input->post("nip");
-		$email = $this->input->post("email");
-		$no_sk_jabfung = $this->input->post("no_sk_jabfung");
-		$password = $this->input->post("password");
+		try
+		{
+			$this->load->model("user_m");
+			
+			$id_wilayah = $this->input->post("id_wilayah");
+			$nip = $this->input->post("nip");
+			$nama = $this->input->post("nama");
+			$email = $this->input->post("email");
+			$no_sk_jabfung = $this->input->post("no_sk_jabfung");
+			$password = $this->input->post("password");
+			$password = hash('sha256', $password);
+			$sk_jabfung = $this->input->post("sk_jabfung");
+			
+			$split_nip = str_split($nip);
+			$split_nip_tl = str_split($nip, 8);
+			$tl_tmp = isset($split_nip_tl[0])?$split_nip_tl[0]:"";
+			$stl = str_split($tl_tmp);
+			
+			//'Laki-laki','Perempuan'
+			$jenis_kelamin = isset($split_nip[14])?$split_nip[14]:"";
+			if( $jenis_kelamin == "1" )
+				$jenis_kelamin = "Laki-laki";
+			elseif( $jenis_kelamin == "2" )
+				$jenis_kelamin = "Perempuan";
+			else
+				$jenis_kelamin = "";
+			// Tanggal Lahir
+			$tanggal_lahir = $stl[0].$stl[1].$stl[2].$stl[3]. "-" . $stl[4].$stl[5] . "-" . $stl[6].$stl[7];
+			
+			$data_user = array(
+				"email"=>$email,
+				"password"=>$password,
+				"id_kategori_user"=>3
+			);
+			
+			$data_pegawai = array(
+				"id_wilayah"=>$id_wilayah,
+				"nip"=>$nip,
+				"no_sk_jabfung"=>$no_sk_jabfung,
+				"sk_jabfung"=>$sk_jabfung,
+				"jenis_kelamin"=>$jenis_kelamin,
+				"tanggal_lahir"=>$tanggal_lahir,
+				"nama"=>$nama
+			);
+			
+			$result = $this->user_m->insert_pegawai($data_user, $data_pegawai);
+			
+			if( $result )
+			{
+				$pesan = "<b>Berhasil!</b> Proses pendaftaran berhasil. Silahkan menunggu proses verifikasi 
+						oleh Administrator kami paling lambat 7 x 24 Jam";
+				$this->session->set_flashdata('pesan', $this->get_alert("success", $pesan));
+			}
+			else
+			{
+				$pesan = "<b>Gagal!</b> Proses pendaftaran gagal. Silahkan mencoba kembali atau hubungi Administrator kami";
+				$this->session->set_flashdata('pesan', $this->get_alert("fail"));
+			}
+			
+			redirect("frontend/registrasi");
+			
+		} catch(Exception $e){
+			echo "Terjadi Kesalahan. Hubungi Administrator";
+		}
+		
 	}
 	
 	public function konten_statis($where=NULL)
@@ -279,6 +386,18 @@ class Frontend extends CI_Controller {
 			$data = $this->get_right_sidebar();
 			$data["faq"] = $faq_kategori;
 			$data["konten"] = "frontend/content/faq/faq-list.view.php";
+			$this->load->view('frontend/index', $data);
+		} catch(Exception $e){
+			echo "Terjadi Kesalahan. Hubungi Administrator";
+		}
+	}
+	
+	public function sebaran()
+	{
+		try
+		{
+			$data = $this->get_right_sidebar();
+			$data["konten"] = "frontend/content/sebaran/sebaran-main.view.php";
 			$this->load->view('frontend/index', $data);
 		} catch(Exception $e){
 			echo "Terjadi Kesalahan. Hubungi Administrator";

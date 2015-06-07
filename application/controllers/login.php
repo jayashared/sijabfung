@@ -20,7 +20,8 @@ class Login extends CI_Controller {
 
 		$where = array(
 			"email"=>$email,
-			"password"=>hash('sha256', $password)
+			"password"=>hash('sha256', $password),
+			"status"=>"aktif"
 		);
 		
 		$result = $this->user_m->select($where);
@@ -34,7 +35,7 @@ class Login extends CI_Controller {
 			);
 		
 			$this->session->set_userdata('member_in', $sess_array);
-			redirect("admin/berita");
+			redirect("admin");
 		else:
 			$message = '<div class="alert alert-danger" role="alert"><strong>Gagal!</strong> Email dan Password Tidak sesuai</div>';
 			$this->session->set_flashdata('pesan', $message);
@@ -45,7 +46,7 @@ class Login extends CI_Controller {
 	public function logout()
 	{
 		$this->session->unset_userdata('member_in');
-		redirect("login", 'refresh');
+		redirect("frontend", 'refresh');
 	}
 	
 }

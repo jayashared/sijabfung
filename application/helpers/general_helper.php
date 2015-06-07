@@ -32,6 +32,20 @@
 		return $tgl; 
 	}
 	
+	function TglUK($tgl)
+	{
+		if( !empty($tgl) )
+		{
+			$tgl		= explode("-", $tgl);
+			$tgl		= $tgl[2] . "/" . $tgl[1] . "/" . $tgl[0];
+		}
+		else
+		{
+			$tgl = "";
+		}
+		return $tgl; 
+	}
+	
 	function TglOnlyIndo($tgl)
 	{
 		$bulan		= array("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des");
@@ -78,6 +92,16 @@
 		$b			= intval($tgl[0])-1>=0?intval($tgl[0])-1:0;
 		$tgl 		=  isset($tgl[1])?$tgl[1]:"";
 		return $bulan[$b] . " " . $tgl; 
+	}
+	
+	function tglSql($tgl=NULL)
+	{
+		$arr_tgl = explode("/", $tgl);
+		$tgl = isset($arr_tgl[0])?$arr_tgl[0]:"";
+		$bln = isset($arr_tgl[1])?$arr_tgl[1]:"";
+		$thn = isset($arr_tgl[2])?$arr_tgl[2]:"";
+		
+		return $thn . "-" . $bln . "-" . $tgl;
 	}
 	
 	function SEO($input){ 

@@ -10,7 +10,7 @@
         {
     ?>
     <div class="row">
-        <div class="col-md-10 col-sm-10">
+        <div class="col-md-12 col-sm-12">
             <h2><a href="<?php echo base_url() ?>frontend/pengumuman_detail/<?php echo $row->id_pengumuman ?>/<?php echo SEO($row->judul) ?>"><?php echo $row->judul ?></a></h2>
             <ul class="blog-info">
                 <li><i class="fa fa-calendar"></i> <?php echo TglOnlyIndo($row->tanggal_pengumuman) ?></li>

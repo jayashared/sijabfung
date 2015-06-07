@@ -108,12 +108,13 @@ CREATE TABLE IF NOT EXISTS `tbl_download_kategori` (
   PRIMARY KEY (`id_download_kategori`),
   KEY `FK_tbl_download_kategori_tbl_user` (`change_by`),
   CONSTRAINT `FK_tbl_download_kategori_tbl_user` FOREIGN KEY (`change_by`) REFERENCES `tbl_user` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table jabfung.tbl_download_kategori: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tbl_download_kategori` DISABLE KEYS */;
 INSERT INTO `tbl_download_kategori` (`id_download_kategori`, `download_kategori`, `change_by`, `change_date`) VALUES
-	(1, 'Kategori', 1, '2015-04-08 17:49:04');
+	(1, 'Kategori', 1, '2015-04-08 17:49:04'),
+	(2, 'Peraturan BPKP', 1, '2015-04-25 22:40:11');
 /*!40000 ALTER TABLE `tbl_download_kategori` ENABLE KEYS */;
 
 
@@ -268,19 +269,21 @@ CREATE TABLE IF NOT EXISTS `tbl_konten_statis` (
   `deskripsi` text NOT NULL,
   `gambar` varchar(200) DEFAULT NULL,
   `change_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `change_by` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id_konten_statis`)
+  `change_by` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id_konten_statis`),
+  KEY `FK_tbl_konten_statis_tbl_user` (`change_by`),
+  CONSTRAINT `FK_tbl_konten_statis_tbl_user` FOREIGN KEY (`change_by`) REFERENCES `tbl_user` (`id_user`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table jabfung.tbl_konten_statis: ~6 rows (approximately)
 /*!40000 ALTER TABLE `tbl_konten_statis` DISABLE KEYS */;
 INSERT INTO `tbl_konten_statis` (`id_konten_statis`, `nama`, `judul`, `deskripsi`, `gambar`, `change_date`, `change_by`) VALUES
-	(1, 'tentang_kami', 'Tentang Kami', '<p></p><div align="center"><a href="http://dahatriswanto.files.wordpress.com/2013/09/ilistrator-jabfung2.jpg"><img class="aligncenter size-medium wp-image-1697" alt="ilistrator-jabfung" src="http://dahatriswanto.files.wordpress.com/2013/09/ilistrator-jabfung2.jpg?w=300" height="208" width="478"></a><br><div align="justify">&nbsp;&nbsp;&nbsp; Jabatan fungsional Pengelola Pengadaan Barang/Jasa Pemerintah adalah jabatan yang mempunyai ruang lingkup tugas, tanggung jawab dan wewenang untuk melakukan kegiatan pengadaan barang/jasa Pemerintah sesuai dengan peraturan perundang-undangan.<br><br>&nbsp; Jabatan Fungsional Pengelola Pengadaan Barang/Jasa ditetapkan berdasarkan&nbsp; Peraturan Menteri PAN-RB Tentang Jabatan Fungsional Pengelola Pengadaan Barang/Jasa Dan Angka Kreditnya Nomor 77 Tahun 2012, 20 Desember 2012<br><br>Tujuan Pembentukan Jabatan Fungsional Pengelola PBJ<br>&nbsp;&nbsp;&nbsp; Membina tenaga pengelola&nbsp; pengadaan barang/jasa pemerintah agar menjadi tenaga profesional sehingga pelaksanaan pengadaan dapat berjalan sesuai dengan prinsip pengadaan (efektif, efisien, terbuka, bersaing, transparan, tidak diskriminatif, dan akuntabel).<br>&nbsp; <br>&nbsp;&nbsp;&nbsp; Tugas pokok Pengelola Pengadaan Barang/Jasa yaitu melaksanakan kegiatan :<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Perencanaan Pengadaan<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Pemilihan Penyedia<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Manajeman Kontrak<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Manajemen Informasi Aset<br><br><br><br></div></div><p></p>', NULL, '2015-04-21 12:33:23', 'admin'),
-	(2, 'struktur_organisasi', 'Struktur Organisasi', '<p style="text-align: center;"><a href="http://dahatriswanto.files.wordpress.com/2013/08/struktur-organisasi-lkpp.png"><img class=" wp-image-1682 aligncenter" alt="struktur organisasi LKPP" src="http://dahatriswanto.files.wordpress.com/2013/08/struktur-organisasi-lkpp.png?w=300" width="600" height="412" /></a></p>\r\n<p style="text-align: center;"></p>', NULL, '2015-04-21 12:33:33', 'admin'),
-	(3, 'jabfung_pengadaan', 'Jabatan Fungsional Pengadaan', '<p align="center">&nbsp;<a href="http://dahatriswanto.files.wordpress.com/2013/09/valueformoneyok.jpg"><img class="aligncenter size-medium wp-image-1707" alt="valueformoneyok" src="http://dahatriswanto.files.wordpress.com/2013/09/valueformoneyok.jpg?w=300" height="155" width="300"></a></p><p><b>Jabatan fungsional Pengelola Pengadaan Barang/Jasa Pemerintah</b> adalah jabatan yang mempunyai ruang lingkup tugas, tanggung jawab dan wewenang untuk melakukan kegiatan pengadaan barang/jasa Pemerintah sesuai dengan peraturan perundang-undangan.<br><br><br><br></p>', NULL, '2015-04-21 12:33:41', 'admin'),
-	(4, 'peraturan_peruu', 'Peraturan dan Perundang-undangan', '<p>Jabatan Fungsional Pengelola Pengadaan Barang/Jasa ditetapkan berdasarkan Peraturan Menteri PAN-RB Tentang Jabatan Fungsional Pengelola Pengadaan Barang/Jasa Dan Angka Kreditnya Nomor 77 Tahun 2012, 20 Desember 2012<br><br>Pengelola Pengadaan Barang/Jasa berkedudukan sebagai pelaksana teknis fungsional di bidang pengadaan barang/jasa pada instansi pemerintah&nbsp; dan merupakan jabatan karier</p><p><br><b><a href="http://dahatriswanto.files.wordpress.com/2013/09/karier-jabfung.jpg"><img src="http://dahatriswanto.files.wordpress.com/2013/09/karier-jabfung.jpg?w=300" alt="karier-jabfung" class="aligncenter size-medium wp-image-1698" height="292" width="465"></a></b></p><p><br>Tugas pokok Pengelola Pengadaan Barang/Jasa yaitu melaksanakan kegiatan :<br>- Perencanaan Pengadaan<br>- Pemilihan Penyedia<br>- Manajeman Kontrak<br>- Manajemen Informasi Aset<br><br>Unsur Kegiatan Jabatan Fungsional Pengelola Pengadaan Barang/Jasa Yang Dinilai Angka Kreditnya, Terdiri Dari :<br>A. Pendidikan;<br>&nbsp;&nbsp;&nbsp;&nbsp; - Pendidikan Sekolah<br>&nbsp;&nbsp;&nbsp;&nbsp; - Diklat<br>B. Pengelolaan Pengadaan Barang/Jasa<br>&nbsp;&nbsp;&nbsp; - Perencanaan Pengadaan;<br>&nbsp;&nbsp;&nbsp; - Pemilihan Penyedia;<br>&nbsp;&nbsp;&nbsp; - Manajeman Kontrak;<br>&nbsp;&nbsp;&nbsp; - Manajemen Informasi Aset;<br>C. Pengembangan Profesi Pengelola Pengadaan&nbsp; Barang/Jasa Pemerintah;<br>D. Penunjang Tugas.<br><br></p>', NULL, '2015-04-21 12:33:53', 'admin'),
-	(5, 'footer', 'Footer', '<p>Apikasi SIM Jabfung Pengelola PBJ ini dikhususkan untuk para pejabat \r\nfungsional pengelola Barang/Jasa pemerintah, BKD dan Tim Penilai Angka \r\nKredit. Untuk dapat memasukkan butir kegiatan, User Jabfung Pengelola \r\nPBJ terlebih dahulu harus <b>login </b>ke sistem. Sebelum login, user Pengelola PBJ harus <b>registrasi/daftar</b>\r\n dengan memasukkan: NIP, Nomor Sertifikat, SK Jabfung, password dan \r\nemail. Setelah mendaftar, maka user jabfung akan mendapatkan email untuk\r\n aktivasi.&nbsp; Setelah aktivasi, user jabfung dapat login dengan mengisi \r\nNIP dan password.<br><br>Setelah login, user jabfung dapat:<br><br>-&nbsp;&nbsp;&nbsp;&nbsp; Menghitung Angka Kredit pada menu PAK disebelah kiri<br><br>-&nbsp;&nbsp;&nbsp;&nbsp; Mencetak bukti SPMK= Surat Pernyataan Melakukan Kegiatan<br><br>-&nbsp;&nbsp;&nbsp;&nbsp; Mengedit Biodata user jabfung pada menu Data di sebelah kiri.<br><br>-&nbsp;&nbsp;&nbsp;&nbsp;\r\n Memasukkan butir kegiatan pada menu Data di sebelah kiri, mulai dari \r\ndata kegiatan perencanaan pengadaan, data kegiatan pendidikan, dan data \r\nkegiatan pemilihan penyedia.</p>', NULL, '2015-04-21 12:33:57', 'admin'),
-	(6, 'kontak_kami', 'Kontak Kami', '<p><b>LKPP Instansi Pembina Jabatan Fungsional Pengelola Pengadaan Barang/Jasa</b><br>\r\n<br>\r\nDirektorat Pengembangan Profesi<br>\r\nDeputi Bidang Pengembangan dan Pembinaan Sumber Daya Manusia<br>\r\nGedung SME Tower Lt.7 Jl. Gatot Subroto Kav 94 Jakarta 12780<br>\r\nTelepon :(021) 7997250/7989374/7989517<br>\r\nFax :(021) 7997250/7989374/7989517<br>\r\nMobile: 08562556700 <br>\r\nEmail: <a href="mailto:ditbangprof@lkpp.go.id">ditbangprof@lkpp.go.id</a></p><p><![if !mso]>\r\n<style>\r\nv\\:* {behavior:url(#default#VML);}\r\no\\:* {behavior:url(#default#VML);}\r\nb\\:* {behavior:url(#default#VML);}\r\n.shape {behavior:url(#default#VML);}\r\n</style>\r\n<![endif]></p><p><![if pub]><xml> <b:publication type="OplPub" oty="68" oh="256"></b:publication></xml><br>\r\n<br>\r\n<br>\r\n<iframe marginheight="0" marginwidth="0" src="https://maps.google.com/maps?source=s_q&amp;f=q&amp;hl=en&amp;geocode=&amp;q=smesco+pancoran&amp;aq=&amp;sll=-2.44565,117.8888&amp;sspn=23.67085,43.286133&amp;ie=UTF8&amp;hq=smesco+pancoran&amp;hnear=&amp;cid=7818986157959770553&amp;t=m&amp;iwloc=A&amp;ll=-6.24005,106.833372&amp;spn=0.017064,0.032616&amp;output=embed" frameborder="0" height="350" scrolling="no" width="425"></iframe><br><small><a href="https://maps.google.com/maps?source=embed&amp;f=q&amp;hl=en&amp;geocode=&amp;q=smesco+pancoran&amp;aq=&amp;sll=-2.44565,117.8888&amp;sspn=23.67085,43.286133&amp;ie=UTF8&amp;hq=smesco+pancoran&amp;hnear=&amp;cid=7818986157959770553&amp;t=m&amp;iwloc=A&amp;ll=-6.24005,106.833372&amp;spn=0.017064,0.032616" style="color:#0000FF;text-align:left">View Larger Map</a></small></p>', NULL, '2015-04-21 12:34:02', 'admin');
+	(1, 'tentang_kami', 'Tentang Kami', '<p></p><div align="center"><a href="http://dahatriswanto.files.wordpress.com/2013/09/ilistrator-jabfung2.jpg"><img class="aligncenter size-medium wp-image-1697" alt="ilistrator-jabfung" src="http://dahatriswanto.files.wordpress.com/2013/09/ilistrator-jabfung2.jpg?w=300" height="208" width="478"></a><br><div align="justify">&nbsp;&nbsp;&nbsp; Jabatan fungsional Pengelola Pengadaan Barang/Jasa Pemerintah adalah jabatan yang mempunyai ruang lingkup tugas, tanggung jawab dan wewenang untuk melakukan kegiatan pengadaan barang/jasa Pemerintah sesuai dengan peraturan perundang-undangan.<br><br>&nbsp; Jabatan Fungsional Pengelola Pengadaan Barang/Jasa ditetapkan berdasarkan&nbsp; Peraturan Menteri PAN-RB Tentang Jabatan Fungsional Pengelola Pengadaan Barang/Jasa Dan Angka Kreditnya Nomor 77 Tahun 2012, 20 Desember 2012<br><br>Tujuan Pembentukan Jabatan Fungsional Pengelola PBJ<br>&nbsp;&nbsp;&nbsp; Membina tenaga pengelola&nbsp; pengadaan barang/jasa pemerintah agar menjadi tenaga profesional sehingga pelaksanaan pengadaan dapat berjalan sesuai dengan prinsip pengadaan (efektif, efisien, terbuka, bersaing, transparan, tidak diskriminatif, dan akuntabel).<br>&nbsp; <br>&nbsp;&nbsp;&nbsp; Tugas pokok Pengelola Pengadaan Barang/Jasa yaitu melaksanakan kegiatan :<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Perencanaan Pengadaan<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Pemilihan Penyedia<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Manajeman Kontrak<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Manajemen Informasi Aset<br><br><br><br></div></div><p></p>', NULL, '2015-04-23 11:39:06', 1),
+	(2, 'struktur_organisasi', 'Struktur Organisasi', '<p style="text-align: center;"><a href="http://dahatriswanto.files.wordpress.com/2013/08/struktur-organisasi-lkpp.png"><img class=" wp-image-1682 aligncenter" alt="struktur organisasi LKPP" src="http://dahatriswanto.files.wordpress.com/2013/08/struktur-organisasi-lkpp.png?w=300" width="600" height="412" /></a></p>\r\n<p style="text-align: center;"></p>', NULL, '2015-04-23 11:39:08', 1),
+	(3, 'jabfung_pengadaan', 'Jabatan Fungsional Pengadaan', '<p align="center">&nbsp;<a href="http://dahatriswanto.files.wordpress.com/2013/09/valueformoneyok.jpg"><img class="aligncenter size-medium wp-image-1707" alt="valueformoneyok" src="http://dahatriswanto.files.wordpress.com/2013/09/valueformoneyok.jpg?w=300" height="155" width="300"></a></p><p><b>Jabatan fungsional Pengelola Pengadaan Barang/Jasa Pemerintah</b> adalah jabatan yang mempunyai ruang lingkup tugas, tanggung jawab dan wewenang untuk melakukan kegiatan pengadaan barang/jasa Pemerintah sesuai dengan peraturan perundang-undangan.<br><br><br><br></p>', NULL, '2015-04-23 11:39:09', 1),
+	(4, 'peraturan_peruu', 'Peraturan dan Perundang-undangan', '<p>Jabatan Fungsional Pengelola Pengadaan Barang/Jasa ditetapkan berdasarkan Peraturan Menteri PAN-RB Tentang Jabatan Fungsional Pengelola Pengadaan Barang/Jasa Dan Angka Kreditnya Nomor 77 Tahun 2012, 20 Desember 2012<br><br>Pengelola Pengadaan Barang/Jasa berkedudukan sebagai pelaksana teknis fungsional di bidang pengadaan barang/jasa pada instansi pemerintah&nbsp; dan merupakan jabatan karier</p><p><br><b><a href="http://dahatriswanto.files.wordpress.com/2013/09/karier-jabfung.jpg"><img src="http://dahatriswanto.files.wordpress.com/2013/09/karier-jabfung.jpg?w=300" alt="karier-jabfung" class="aligncenter size-medium wp-image-1698" height="292" width="465"></a></b></p><p><br>Tugas pokok Pengelola Pengadaan Barang/Jasa yaitu melaksanakan kegiatan :<br>- Perencanaan Pengadaan<br>- Pemilihan Penyedia<br>- Manajeman Kontrak<br>- Manajemen Informasi Aset<br><br>Unsur Kegiatan Jabatan Fungsional Pengelola Pengadaan Barang/Jasa Yang Dinilai Angka Kreditnya, Terdiri Dari :<br>A. Pendidikan;<br>&nbsp;&nbsp;&nbsp;&nbsp; - Pendidikan Sekolah<br>&nbsp;&nbsp;&nbsp;&nbsp; - Diklat<br>B. Pengelolaan Pengadaan Barang/Jasa<br>&nbsp;&nbsp;&nbsp; - Perencanaan Pengadaan;<br>&nbsp;&nbsp;&nbsp; - Pemilihan Penyedia;<br>&nbsp;&nbsp;&nbsp; - Manajeman Kontrak;<br>&nbsp;&nbsp;&nbsp; - Manajemen Informasi Aset;<br>C. Pengembangan Profesi Pengelola Pengadaan&nbsp; Barang/Jasa Pemerintah;<br>D. Penunjang Tugas.<br><br></p>', NULL, '2015-04-23 11:39:10', 1),
+	(5, 'footer', 'Footer', '<p>Apikasi SIM Jabfung Pengelola PBJ ini dikhususkan untuk para pejabat \r\nfungsional pengelola Barang/Jasa pemerintah, BKD dan Tim Penilai Angka \r\nKredit. Untuk dapat memasukkan butir kegiatan, User Jabfung Pengelola \r\nPBJ terlebih dahulu harus <b>login </b>ke sistem. Sebelum login, user Pengelola PBJ harus <b>registrasi/daftar</b>\r\n dengan memasukkan: NIP, Nomor Sertifikat, SK Jabfung, password dan \r\nemail. Setelah mendaftar, maka user jabfung akan mendapatkan email untuk\r\n aktivasi.&nbsp; Setelah aktivasi, user jabfung dapat login dengan mengisi \r\nNIP dan password.<br><br>Setelah login, user jabfung dapat:<br><br>-&nbsp;&nbsp;&nbsp;&nbsp; Menghitung Angka Kredit pada menu PAK disebelah kiri<br><br>-&nbsp;&nbsp;&nbsp;&nbsp; Mencetak bukti SPMK= Surat Pernyataan Melakukan Kegiatan<br><br>-&nbsp;&nbsp;&nbsp;&nbsp; Mengedit Biodata user jabfung pada menu Data di sebelah kiri.<br><br>-&nbsp;&nbsp;&nbsp;&nbsp;\r\n Memasukkan butir kegiatan pada menu Data di sebelah kiri, mulai dari \r\ndata kegiatan perencanaan pengadaan, data kegiatan pendidikan, dan data \r\nkegiatan pemilihan penyedia.</p>', NULL, '2015-04-23 11:39:11', 1),
+	(6, 'kontak_kami', 'Kontak Kami', '<p>\r\n	<b>LKPP Instansi Pembina Jabatan Fungsional Pengelola Pengadaan Barang/Jasa</b></p>\r\n<h6 style="box-sizing: border-box; font-family: Copse-Regular, Monaco, Arial, sans-serif; font-weight: 500; line-height: 20px; margin: 0px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(84, 8, 0);">\r\n	Jl. RS Fatmawati No. 33A, Cipete, Jakarta Selatan</h6>\r\n<h6 style="box-sizing: border-box; font-family: Copse-Regular, Monaco, Arial, sans-serif; font-weight: 500; line-height: 20px; margin: 0px; font-size: 12px; color: rgb(255, 255, 255); background-color: rgb(84, 8, 0);">\r\n	Telp 021.75916038, 7691849, Fax. 021.7692112</h6>\r\n<p>\r\n	<br />\r\n	<br />\r\n	<iframe frameborder="0" height="350" marginheight="0" marginwidth="0" scrolling="no" src="https://maps.google.com/maps?source=s_q&amp;f=q&amp;hl=en&amp;geocode=&amp;q=smesco+pancoran&amp;aq=&amp;sll=-2.44565,117.8888&amp;sspn=23.67085,43.286133&amp;ie=UTF8&amp;hq=smesco+pancoran&amp;hnear=&amp;cid=7818986157959770553&amp;t=m&amp;iwloc=A&amp;ll=-6.24005,106.833372&amp;spn=0.017064,0.032616&amp;output=embed" width="425"></iframe><br />\r\n	<small><a href="https://maps.google.com/maps?source=embed&amp;f=q&amp;hl=en&amp;geocode=&amp;q=smesco+pancoran&amp;aq=&amp;sll=-2.44565,117.8888&amp;sspn=23.67085,43.286133&amp;ie=UTF8&amp;hq=smesco+pancoran&amp;hnear=&amp;cid=7818986157959770553&amp;t=m&amp;iwloc=A&amp;ll=-6.24005,106.833372&amp;spn=0.017064,0.032616" style="color:#0000FF;text-align:left">View Larger Map</a></small></p>\r\n<style type="text/css">\r\nv\\:* {behavior:url(#default#VML);}\r\no\\:* {behavior:url(#default#VML);}\r\nb\\:* {behavior:url(#default#VML);}\r\n.shape {behavior:url(#default#VML);}</style>\r\n', NULL, '2015-04-26 07:04:17', 1);
 /*!40000 ALTER TABLE `tbl_konten_statis` ENABLE KEYS */;
 
 
@@ -300,16 +303,13 @@ CREATE TABLE IF NOT EXISTS `tbl_link` (
 -- Dumping data for table jabfung.tbl_link: ~10 rows (approximately)
 /*!40000 ALTER TABLE `tbl_link` DISABLE KEYS */;
 INSERT INTO `tbl_link` (`id_link`, `title`, `url`, `change_by`, `change_date`) VALUES
-	(1, 'LKPP', 'http://www.lkpp.go.id', 1, '2015-04-01 22:04:38'),
-	(2, 'Inaproc', 'http://inaproc.lkpp.go.id/v3/', 1, '2015-04-01 22:04:38'),
+	(1, 'Kementerian Agama', 'www.kemenag.go.id', 1, '2015-04-01 22:04:38'),
+	(2, 'BPKP', 'www.bpkp.go.id', 1, '2015-04-01 22:04:38'),
 	(3, 'E-katalog', 'http://inaproc.lkpp.go.id/v3/public/ekatalog/ekatalog.htm', 1, '2015-04-01 22:04:38'),
 	(4, 'Simpel', 'http://simpel.lkpp.go.id/', 1, '2015-04-01 22:04:38'),
 	(5, 'LPSE LKPP', 'http://lpse.lkpp.go.id/', 1, '2015-04-01 22:04:38'),
-	(6, 'CPNS LKPP', 'http://rekrutmen.lkpp.go.id/', 1, '2015-04-01 22:04:38'),
-	(7, 'WBS PBJ', 'https://wbs.lkpp.go.id/container.php', 1, '2015-04-01 22:04:38'),
-	(8, 'Konsultasi PBJ', 'www.konsultasi.lkpp.go.id', 1, '2015-04-01 22:04:38'),
-	(9, 'Monev', 'http://monev.lkpp.go.id/', 1, '2015-04-01 22:04:38'),
-	(12, 'Google', 'www.google.com', 1, '2015-04-08 17:25:10');
+	(8, 'Inspektorat Jenderal ', 'http://itjen.kemenag.go.id/web/', 1, '2015-04-01 22:04:38'),
+	(9, 'Monev', 'http://monev.lkpp.go.id/', 1, '2015-04-01 22:04:38');
 /*!40000 ALTER TABLE `tbl_link` ENABLE KEYS */;
 
 
@@ -444,7 +444,7 @@ CREATE TABLE IF NOT EXISTS `tbl_sitemap` (
   `no_sitemap` varchar(50) NOT NULL,
   `sitemap` varchar(255) NOT NULL,
   `judul` varchar(255) NOT NULL,
-  `deskripsi` text NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
   `no_urut` varchar(255) DEFAULT NULL,
@@ -454,13 +454,13 @@ CREATE TABLE IF NOT EXISTS `tbl_sitemap` (
   UNIQUE KEY `no_sitemap` (`no_sitemap`),
   KEY `FK_tbl_sitemap_tbl_user` (`change_by`),
   CONSTRAINT `FK_tbl_sitemap_tbl_user` FOREIGN KEY (`change_by`) REFERENCES `tbl_user` (`id_user`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jabfung.tbl_sitemap: ~6 rows (approximately)
+-- Dumping data for table jabfung.tbl_sitemap: ~19 rows (approximately)
 /*!40000 ALTER TABLE `tbl_sitemap` DISABLE KEYS */;
 INSERT INTO `tbl_sitemap` (`id_sitemap`, `id_parent`, `no_sitemap`, `sitemap`, `judul`, `deskripsi`, `url`, `icon`, `no_urut`, `change_by`, `change_date`) VALUES
 	(1, 0, '01', 'frontend', 'Frontend', 'Frontend', 'frontend', '', '0', 1, '2015-04-21 11:17:31'),
-	(2, 1, '01.01', 'home', '<big><big><i class="fa fa-home"></i></big></big>', 'Frontend - Home', 'home', '', '1', 1, '2015-04-21 11:16:42'),
+	(2, 1, '01.01', 'home', '<big><big><i class="fa fa-home"></i></big></big>', 'Frontend - Home', 'home', '', '1', 1, '2015-04-23 12:44:50'),
 	(3, 1, '01.02', 'berita', 'Berita', 'Frontend - Berita', 'berita', '<i class="fa fa-newspaper-o"></i>', '2', 1, '2015-04-21 11:16:50'),
 	(4, 1, '01.03', 'referensi', 'Referensi', 'Frontend - Referensi', 'referensi', '<i class="fa fa-cloud-download"></i>', '4', 1, '2015-04-22 17:41:49'),
 	(5, 1, '01.04', 'registrasi', 'Registrasi', 'Frontend - Registrasi', 'registrasi', '<i class="fa fa-sign-in"></i>', '5', 1, '2015-04-22 17:41:56'),
@@ -475,7 +475,10 @@ INSERT INTO `tbl_sitemap` (`id_sitemap`, `id_parent`, `no_sitemap`, `sitemap`, `
 	(14, 8, '02.04', 'link', 'Link', '', 'link', '<i class="fa fa-external-link"></i>', '6', 1, '2015-04-21 18:35:03'),
 	(17, 8, '02.05', 'sitemap', 'Sitemap', '', 'sitemap', '<i class="fa fa-sitemap"></i>', '6', 1, '2015-04-21 18:35:08'),
 	(18, 8, '02.06', 'konten_statis', 'Konten Statis', '', 'konten_statis', '<i class="fa fa-bars"></i>', '7', 1, '2015-04-21 18:35:06'),
-	(19, 1, '01.08', 'pengumuman', 'Pengumuman', '', 'pengumuman', '', '3', NULL, '2015-04-22 17:38:48');
+	(19, 9, '01.08', 'pengumuman', 'Pengumuman', '', 'pengumuman', '', '3', NULL, '2015-04-26 06:58:50'),
+	(20, 8, '02.07', 'faq', 'FAQ', 'Admin - FAQ', '#', '<i class="fa fa-question"></i>', '8', 1, '2015-04-23 10:25:59'),
+	(21, 20, '02.07.01', 'faq_kategori', 'Kategori', 'Admin - FAQ Kategori', 'faq_kategori', '', '10', NULL, '2015-04-23 10:27:37'),
+	(22, 20, '02.07.02', 'daftar_faq', 'Daftar FAQ', 'Admin - Daftar FAQ', 'daftar_faq', '', '11', NULL, '2015-04-23 10:27:22');
 /*!40000 ALTER TABLE `tbl_sitemap` ENABLE KEYS */;
 
 
@@ -486,14 +489,17 @@ CREATE TABLE IF NOT EXISTS `tbl_sitemap_user` (
   `id_user_kategori` int(10) NOT NULL,
   `id_sitemap` int(10) NOT NULL,
   PRIMARY KEY (`id_sitemap_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jabfung.tbl_sitemap_user: ~2 rows (approximately)
+-- Dumping data for table jabfung.tbl_sitemap_user: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tbl_sitemap_user` DISABLE KEYS */;
 INSERT INTO `tbl_sitemap_user` (`id_sitemap_user`, `id_user_kategori`, `id_sitemap`) VALUES
 	(1, 2, 14),
 	(2, 2, 17),
-	(3, 2, 18);
+	(3, 2, 18),
+	(4, 2, 20),
+	(5, 2, 21),
+	(6, 2, 22);
 /*!40000 ALTER TABLE `tbl_sitemap_user` ENABLE KEYS */;
 
 

@@ -1,7 +1,9 @@
 <?php foreach($list as $num_row => $row){ ?>
     <tr>
         <td>
+        	<?php if(!$unset_delete) { ?>
             <input type="checkbox" class="select-row" data-id="<?php echo $row->primary_key_value; ?>" />
+        	<?php } ?>
         </td>
         <td>
                 <div class="only-desktops"  style="white-space: nowrap">

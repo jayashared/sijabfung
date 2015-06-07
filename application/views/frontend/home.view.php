@@ -29,7 +29,6 @@
         <!-- END CAROUSEL -->             
     </div>
     
-    <h3><i class="fa fa-eye"></i> Selayang Pandang</h3>
     <div class="row">
     	<div class="col-md-12">
         </div>

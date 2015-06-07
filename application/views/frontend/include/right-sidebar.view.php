@@ -4,29 +4,29 @@
 <!-- BEGIN RIGHT SIDEBAR -->            
 <div class="col-md-3 col-sm-3 blog-sidebar">
     <!-- BEGIN Pengumuman -->     
-    <?php
-    	$pengumuman = isset($pengumuman)?$pengumuman:"";
-	?>                       
-    <h2> Pengumuman</h2>
-    <div class="recent-news margin-bottom-10">
-        <div class="row margin-bottom-10">
-            <?php
-                foreach($pengumuman as $rp)
-				{
-			?>
-                <div class="col-md-12">
-                    <h3><a href="#"><?php echo $rp->judul ?></a></h3>
-                    <p>
-                    	<?php echo PotongKata($rp->isi_pengumuman, 10) ?>
-                        <a class="more" href="blog_item.html">Selengkapnya... <i class="icon-angle-right"></i></a>
-                    </p>
-                    
-                </div>           
-        	<?php
-				}
-			?>
-        </div>
-    </div>
+    	<form class="form-horizontal" action="<?php echo base_url() ?>login/proses" method="post">
+          <div class="form-group">
+          	<label> Email </label>
+            <div class="col-sm-12">
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email">
+            </div>
+          </div>
+          <div class="form-group">
+          	<label> Password </label>
+            <div class="col-sm-12">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="password">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-6" align="left">
+            	<a href="#"> <i class="fa fa-question-circle"></i> Lupa Password </a>
+            </div>
+            
+            <div class="col-sm-6" align="right">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+          </div>
+        </form>
     <!-- END Pengumuman -->                            
 	
     <!-- BEGIN BLOG PHOTOS STREAM -->

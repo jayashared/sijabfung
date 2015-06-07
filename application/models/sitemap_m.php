@@ -17,9 +17,9 @@ class Sitemap_m  extends MY_Model  {
 	function daftar_sitemap_admin($where="")
 	{
 		$sitemap = new MY_Model();
-		$sitemap->MY_Model("tbl_sitemap_admin_view");
+		$sitemap->MY_Model("tbl_sitemap_user_view");
 		$sitemap->order_by("no_sitemap, no_urut");
-		//print_r($where);
+		//echo $this->db->last_query();
 		return $sitemap->get_data_where($where);
 		
 	}
